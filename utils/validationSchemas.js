@@ -11,3 +11,8 @@ export const signUpSchema = joi.object({
     username: joi.string().required(),
     pictureUrl: joi.string().uri().required()
 });
+
+export const urlSchema = joi.object({
+    link: joi.string().required(),
+    commenter: joi.string()
+});

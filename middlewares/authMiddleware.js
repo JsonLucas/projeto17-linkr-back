@@ -3,9 +3,8 @@ import db from "../database/dbConnection.js";
 export async function authMiddleware(req, res, next){
     const {authorization} = req.headers;
     if (!authorization) return res.sendStatus(422);
-
-    const token = authorization.replace('Bearer ', "");
-    if(!token) return res.sendStatus(401);
+    // const token = authorization.replace('Bearer ', "");
+    const token = authorization;
     const session = await db.query(`
         SELECT * FROM sessions
         WHERE token = $1
@@ -16,7 +15,7 @@ export async function authMiddleware(req, res, next){
     const user = await db.query(`
         SELECT * FROM users
         WHERE id = $1
-    `,[session.rows[0].userId]);
+    `,[session.rows[0].idUser]);
     if (user.rowCount === 0 ){
         return res.sendStatus(401);
     }
