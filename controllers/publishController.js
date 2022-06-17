@@ -1,5 +1,5 @@
 import postPublish from "./../database/queries/insert/publish.js";
-import selectPosts from "../database/queries/select/selectPosts.js";
+import { selectPosts } from "../database/queries/retrieve/posts.js";
 
 export async function publishController(req, res){
     const {user} = res.locals;
@@ -21,7 +21,6 @@ export async function getPosts(req, res){
         console.log(e);
         return res.status(500).send('Não foi possível se conectar com o BD');
     }
-
 }
 
 export async function getUser(req, res){

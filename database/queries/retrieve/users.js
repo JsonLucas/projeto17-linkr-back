@@ -9,7 +9,7 @@ export const queryUserLogin = async (body) => {
 }
 
 export const getUserById = async (userId) => {
-    const sql = `SELECT * FROM posts JOIN users ON posts."idUser"="users"."id" WHERE posts."idUser"=$1`;
+    const sql = `SELECT * FROM users WHERE id=$1`;
     const query = await dbConnection.query(sql, [userId]);
     const { rowCount, rows } = query;
     return { rowCount, rows };

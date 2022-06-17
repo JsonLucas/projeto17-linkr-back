@@ -1,25 +1,19 @@
-import db from "../database/dbConnection.js";
+import getUserSession from "../database/queries/retrieve/sessions.js";
+import { getUserById } from "../database/queries/retrieve/users.js";
 
 export async function authMiddleware(req, res, next){
-    const {authorization} = req.headers;
-    if (!authorization) return res.sendStatus(422);
-    // const token = authorization.replace('Bearer ', "");
-    const token = authorization;
-    const session = await db.query(`
-        SELECT * FROM sessions
-        WHERE token = $1
-    `,[token]);
-    if (session.rowCount === 0){
-        return res.sendStatus(401);
-    }
-    const user = await db.query(`
-        SELECT * FROM users
-        WHERE id = $1
-    `,[session.rows[0].idUser]);
-    if (user.rowCount === 0 ){
-        return res.sendStatus(401);
-    }
+    const { authorization } = req.headers;
 
+    if (!authorization) return res.sendStatus(422);
+    
+    const session = await getUserSession(authorization);
+
+    if (session.rowCount === 0) return res.sendStatus(401);
+
+    const { idUser } = session.rows[0];
+    const user = await getUserById(idUser);
+    if (user.rowCount === 0 ) return res.sendStatus(401);
+    
     res.locals.user = user;
     next();
 }

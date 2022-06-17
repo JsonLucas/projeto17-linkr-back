@@ -1,9 +1,9 @@
-import { getUserById } from "../database/queries/retrieve/users.js";
+import { getPostsByUserId } from "../database/queries/retrieve/posts.js";
 
 const getUserProfileController = async (req, res) => {
     const { userId } = res.locals;
     try{
-        const userPosts = await getUserById(userId);
+        const userPosts = await getPostsByUserId(userId);
         if(userPosts.rowCount > 0){
             const { rows } = userPosts;
             res.status(200).send(rows);
