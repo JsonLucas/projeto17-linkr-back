@@ -23,3 +23,15 @@ export async function getPosts(req, res){
     }
 
 }
+
+export async function getUser(req, res){
+    const {user} = res.locals;
+    const {name, picture} = user.rows[0];
+    const obj = {name, picture};
+    try{
+        return res.status(200).send(obj);
+    } catch (e) {
+        console.log(e);
+        return res.status(500).send('Não foi possível se conectar com o BD');
+    }
+}
