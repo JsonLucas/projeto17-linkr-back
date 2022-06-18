@@ -4,7 +4,6 @@ const urlMiddleware = (req, res, next) => {
     const {body} = req;
     const validation = validateUrl(body);
     if(validation.error){
-        console.log('alo')
         return res.status(422).send(validation.error);
     }
     next();
