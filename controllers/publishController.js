@@ -1,35 +1,25 @@
+import { getUserById } from "../database/queries/retrieve/users.js";
 import postPublish from "./../database/queries/insert/publish.js";
-import { selectPosts } from "../database/queries/retrieve/posts.js";
 
-export async function publishController(req, res){
-    const {user} = res.locals;
-    const {link, commenter} = req.body;
+async function publishController(req, res){
+    const { userId, body } = res.locals;
+    const { link, commenter } = body;
     try{
-        const insertionPost = await postPublish(link, user.rows[0].id, commenter);
-        return res.sendStatus(201);
+        const user = await getUserById(userId);
+        if(user.rowCount > 0){
+            const insertionPost = await postPublish(link, user.rows[0].id, commenter);
+            if(insertionPost.rowCount > 0){
+                res.sendStatus(201);
+                return;
+            }
+            res.sendStatus(400);
+            return;
+        }
+        res.sendStatus(401);
     } catch (e) {
         console.log(e);
-        return res.status(500).send('Não foi possível se conectar com o BD');
+        res.status(500).send('Não foi possível se conectar com o BD');
     }
 }
 
-export async function getPosts(req, res){
-    try {
-        const posts = await selectPosts();
-        return res.status(200).send(posts);
-    } catch (e) {
-        console.log(e);
-        return res.status(500).send('Não foi possível se conectar com o BD');
-    }
-}
-
-export async function getUser(req, res){
-    const {user} = res.locals;
-    const { id, name, picture } = user.rows[0];
-    try{
-        return res.status(200).send({ id, name, picture });
-    } catch (e) {
-        console.log(e);
-        return res.status(500).send('Não foi possível se conectar com o BD');
-    }
-}
+export default publishController;

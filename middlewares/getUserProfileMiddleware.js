@@ -1,4 +1,4 @@
-import getUserSession from "../database/queries/retrieve/sessions.js";
+import { getUserSession } from "../database/queries/retrieve/sessions.js";
 
 const getUserProfileMiddleware = async (req, res, next) => {
     const { authorization } = req.headers;
