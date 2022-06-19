@@ -3,6 +3,7 @@ import { getUserSession } from "../database/queries/retrieve/sessions.js";
 const getUserProfileMiddleware = async (req, res, next) => {
     const { authorization } = req.headers;
     const { id } = req.params;
+    console.log('teste');
     try{
         const sessionUser = await getUserSession(authorization);
         if(sessionUser.rowCount > 0){

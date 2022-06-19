@@ -6,6 +6,7 @@ async function authMiddleware(req, res, next) {
     const session = await getUserSession(authorization);
     if (session.rowCount > 0) {
         const { idUser } = session.rows[0];
+        res.locals.token = authorization;
         res.locals.userId = idUser;
         res.locals.body = body;
         next();
