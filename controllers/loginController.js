@@ -10,12 +10,13 @@ const loginController = async (req, res) => {
         const queryUser = await queryUserLogin({ email });
         if(queryUser.rowCount > 0){
             const { rows } = queryUser;
+            const { name, picture } = rows[0];
             const passwordComparation = await decryptPassword(password, rows[0].password);
             if(passwordComparation){
                 const token = tokenGeneration(email).split('.');
                 const authorization = { token: `Bearer ${token[1]}` };
                 await setSession(authorization.token, rows[0].id);
-                res.status(200).send(authorization);
+                res.status(200).send({token: authorization, name, picture});
                 return;
             }
             res.status(401).send('incorrect email or password');
