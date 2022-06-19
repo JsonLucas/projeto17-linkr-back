@@ -14,3 +14,10 @@ export const getUserById = async (userId) => {
     const { rowCount, rows } = query;
     return { rowCount, rows };
 }
+
+export const getUsersByQuery = async (queryString) => {
+    const sql = `SELECT * FROM users WHERE name LIKE '%${queryString}%'`;
+    const query = await dbConnection.query(sql);
+    const { rowCount, rows } = query;
+    return { rowCount, rows };
+}
