@@ -3,7 +3,6 @@ import postPublish from "./../database/queries/insert/publish.js";
 
 async function publishController(req, res){
     const { userId } = res.locals;
-    console.log(userId);
     const { link, commenter } = req.body;
     try{
         const user = await getUserById(userId);
