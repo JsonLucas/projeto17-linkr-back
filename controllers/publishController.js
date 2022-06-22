@@ -2,8 +2,9 @@ import { getUserById } from "../database/queries/retrieve/users.js";
 import postPublish from "./../database/queries/insert/publish.js";
 
 async function publishController(req, res){
-    const { userId, body } = res.locals;
-    const { link, commenter } = body;
+    const { userId } = res.locals;
+    console.log(userId);
+    const { link, commenter } = req.body;
     try{
         const user = await getUserById(userId);
         if(user.rowCount > 0){

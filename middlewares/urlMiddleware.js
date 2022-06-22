@@ -1,7 +1,7 @@
 import { validateUrl } from "../utils/validationFunctions.js";
 
 const urlMiddleware = (req, res, next) => {
-    const { body } = res.locals;
+    const body = req.body;
     const validation = validateUrl(body);
     if(validation.status){
         next();
