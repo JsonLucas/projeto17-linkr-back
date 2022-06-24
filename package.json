@@ -21,6 +21,7 @@
     "uuid": "^8.3.2"
   },
   "dependencies": {
+    "metadata-scraper": "^0.2.56",
     "nodemon": "^2.0.16"
   }
 }
