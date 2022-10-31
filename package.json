@@ -5,7 +5,6 @@
   "repository": "https://github.com/JsonLucas/projeto17-linkr-back",
   "author": "JsonLucas",
   "license": "MIT",
-  "type": "module",
   "scripts": {
     "dev": "nodemon",
     "build": "tsc",

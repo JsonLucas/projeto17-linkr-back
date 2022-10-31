@@ -3,7 +3,9 @@ export interface IUser {
 	nickname: string,
 	email: string,
 	password: string,
-	picture?: string
+	picture: string | null,
+	createdAt: Date | null,
+	updatedAt: Date | null
 }
 
 export type Login = Pick<IUser, 'email' | 'password'>;
